@@ -40,10 +40,10 @@
   </target>
 
     <target name="pullDev">
-      <sf:retrieve username="${sf.dev.username}" password="${sf.dev.password}${sf.dev.token}"  serverurl="${sf.dev.url}" retrieveTarget="srcDev" unpackaged="srcDev/package.xml"/>
+      <sf:retrieve username="${sf.dev.username}" password="${sf.dev.password}${sf.dev.token}"  serverurl="${sf.dev.url}" retrieveTarget="${sf.dev.folder}" unpackaged="${sf.dev.folder}/package.xml"/>
     </target>
      <target name="pullProd">
-      <sf:retrieve username="${sf.prod.username}" password="${sf.prod.password}${sf.prod.token}" serverurl="${sf.prod.url}" retrieveTarget="srcProd" unpackaged="srcProd/package.xml"/>
+      <sf:retrieve username="${sf.prod.username}" password="${sf.prod.password}${sf.prod.token}" serverurl="${sf.prod.url}" retrieveTarget="${sf.prod.folder}" unpackaged="${sf.prod.folder}/package.xml"/>
     </target> 
 
     <target name="pushdev">
