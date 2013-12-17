@@ -1,0 +1,131 @@
+<apex:page controller="ObjectConfigCon">
+
+	<apex:sectionHeader title="Papercliff Object Configuration"/>
+    <head>
+    <apex:stylesheet value="{!URLFOR($Resource.Chosen, 'chosen/chosen.css')}"/>     	
+    <script type="text/javascript" src="{!URLFOR($Resource.jQueryUI, 'js/jquery-1.8.2.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.jQueryUI, 'js/jquery-1.8.2.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.jQueryUI, 'js/jquery-ui-1.9.0.custom.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.Chosen, 'chosen/chosen.jquery.min.js')}"></script>
+    
+    </head>
+	
+	<apex:form >
+		<apex:pageMessages id="theMessages"/>
+		<apex:pageBlock >
+			<apex:pageBlockSection id="objectSection">
+				<apex:outputPanel rendered="{!selectedObject = ''}">
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Choose Object:"/>
+						<apex:selectList value="{!selectedObject}" size="1" multiselect="false">
+							<apex:selectOptions value="{!allObjects}"/>
+							<apex:actionSupport event="onchange" action="{!getFields}" rerender="fieldSection,objectSection"/>
+						</apex:selectList>
+					</apex:pageBlockSectionItem>
+				</apex:outputPanel>
+				<apex:outputPanel rendered="{!selectedObject <> '' && selectedObject <> null}">
+					<apex:outputLabel value="{!selectedObject}" style="font-size: 2em;font-weight: normal;"/>
+					<apex:commandLink style="color:#015BA7;padding:3px 3px 3px 3px;" styleClass="listActionLink" action="{!reset}" value="Reset" rerender="fieldSection,objectSection,theMessages">
+					</apex:commandLink>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection id="fieldSection" columns="1">
+				
+				<apex:outputPanel id="fieldTable" rendered="{!isObjectSelected}">
+				<apex:variable var="i" value="{!0}"/>
+				<apex:pageBlockTable value="{!configurations}" var="con">
+					<apex:column >
+						<apex:variable var="i" value="{!i+1}"/>
+					</apex:column>
+					<apex:column headerValue="Action">
+						<apex:outputPanel >
+							<apex:commandLink style="color:#015BA7;padding:3px 3px 3px 3px;" styleClass="listActionLink" action="{!deleteRow}" value="Del" rerender="fieldTable">
+								<apex:param value="{!i}" name="row" assignTo="{!rowNumber}"/>
+							</apex:commandLink>
+						</apex:outputPanel>
+					</apex:column>
+					<apex:column headerValue="Field Name">
+						<apex:selectList value="{!con.FieldName__c}" size="1" multiselect="false" styleclass="field-select">
+							<apex:selectOptions value="{!availableFields}"/>
+						</apex:selectList>
+						<script>
+							
+							$(".field-select").chosen({
+				              no_results_text: "No results matched",
+				              create_option: false
+				            });
+			           	
+			           </script>
+					</apex:column>
+					<apex:column headerValue="Group Name">
+						<apex:inputField value="{!con.Grouping__c}"/>
+						<apex:commandLink style="color:#015BA7;padding:3px 3px 3px 3px; text-decoration:none;"  action="{!showPopUp}" value="Choose from Available Groups" rerender="popup">
+							<apex:param value="{!i}" name="row" assignTo="{!rowNumber}"/>
+                        </apex:commandLink>
+					</apex:column>
+					<apex:facet name="footer">
+                            <apex:outputPanel >               
+                                <apex:commandLink style="color:#015BA7;padding:3px 3px 3px 3px; text-decoration:none;" value="Add Row" action="{!addRow}" rerender="fieldTable">
+                                </apex:commandLink>
+                            </apex:outputPanel>
+                      </apex:facet> 
+				</apex:pageBlockTable>
+				</apex:outputPanel>
+				<div align="center" style="float:center;">
+					<apex:commandButton value="Save All" action="{!saveAll}" rerender="theMessages" rendered="{!isObjectSelected}"/>
+				</div>
+			</apex:pageBlockSection>
+			<apex:outputPanel id="popup">     
+		       	<apex:outputPanel rendered="{!isGroupsShown}"  styleClass="customPopup" layout="block">                   
+		                <div>
+		                	<apex:outputLabel value="Available Groups" style="font-weight:bold;"/>
+		                	<div align="right">
+		                		<apex:commandButton value="Close" action="{!hidepopUp}"/>  
+		                	</div>
+		                	<apex:repeat value="{!availableGroupsSet}" var="n">
+								<div style="margin:1px; height: 25px; width:100%; display: block; float: left">
+			                       <apex:commandLink style="color:#015BA7;padding:3px 3px 3px 3px; text-decoration:none;"  value="{!n}" action="{!hidepopUp}" rerender="popup,fieldTable">
+										<apex:param value="{!n}" name="selectedG" assignTo="{!selectedGroup}"/>
+			                        </apex:commandLink>                           
+			                    </div>
+						    </apex:repeat>				    
+						</div>
+		         </apex:outputPanel>                                  
+      		</apex:outputPanel>    
+		</apex:pageBlock>
+	</apex:form>
+	<style type="text/css">
+       .customPopup{
+            background-color: white;
+            border-style: solid;
+            border-width: 2px;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            z-index: 9999;
+            /* These are the 3 css properties you will need to tweak so the pop 
+            up displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can also add 
+            the height property for a fixed size pop up.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .bPageBlock .pbTitle { width: 50%; }
+                
+        /* Icons
+        ----------------------------------*/
+        
+        /* states and images */
+         .close {
+		  font-size: 15px;
+		  font-weight: bold;
+		  line-height: 16px;
+		  color: #000000;
+		  text-shadow: 0 1px 0 #ffffff;
+		  opacity: 0.2;
+		  filter: alpha(opacity=20);
+		  text-decoration: none;
+		}
+        </style>
+</apex:page>

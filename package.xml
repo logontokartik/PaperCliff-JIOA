@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PaperCliff JIOA</fullName>
+    <types>
+        <members>ObjectConfigCon</members>
+        <members>ObjectConfigTriggerManager</members>
+        <members>SFObjectConfigService</members>
+        <members>TestObjectConfigCon</members>
+        <members>TestObjectConfigTriggerTest</members>
+        <members>TestSFObjectConfigService</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>ObjectConfig</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>ObjectConfigTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>Hashmap__c.CommaSeparatedFields__c</members>
+        <members>Hashmap__c.ObjectName__c</members>
+        <members>ObjectConfiguration__c.FieldLabel__c</members>
+        <members>ObjectConfiguration__c.FieldName__c</members>
+        <members>ObjectConfiguration__c.FieldType__c</members>
+        <members>ObjectConfiguration__c.Grouping__c</members>
+        <members>ObjectConfiguration__c.ObjectName__c</members>
+        <members>ObjectConfiguration__c.Unique__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Hashmap__c</members>
+        <members>ObjectConfiguration__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>ObjectConfiguration__c</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Hashmap__c-Hashmap Layout</members>
+        <members>ObjectConfiguration__c-Object Configuration Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Hashmap__c.All</members>
+        <members>ObjectConfiguration__c.All</members>
+        <name>ListView</name>
+    </types>
+    <types>
+        <members>Chosen</members>
+        <members>jQueryUI</members>
+        <name>StaticResource</name>
+    </types>
+    <types>
+        <members>Hashmap__c.Set_Config</members>
+        <members>ObjectConfiguration__c.Add_Configurations</members>
+        <name>WebLink</name>
+    </types>
+    <version>29.0</version>
+</Package>
